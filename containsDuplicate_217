@@ -1,0 +1,50 @@
+
+# use dictionary to record the time a number appears
+# use d = collections.defaultdict(int)
+# if use d = {} or d = dict, if num not in d, d[num] will raise error, use d.get(2, 0), is 2 not in d, then d[2] = 0
+# but d = collections.defaultdict(int) will not raise error
+
+# time o(n)
+# space o(n)
+import collections
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:        
+        d = collections.defaultdict(int)
+        for num in nums:
+            d[num] += 1
+            if d[num] >= 2:
+                return True
+            
+        return False
+
+
+
+# use d = dict()
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:        
+        d = dict()
+        for num in nums:
+            d[num] = d.get(num, 0) 
+            d[num] += 1
+            if d[num] >= 2:
+                return True
+            
+        return False
+        
+        
+        
+        
+# time o(n)
+# space o(n)
+# convert list to set, time complexity is O(n)
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        numSet = set(nums)
+        if len(numSet) == len(nums):
+            return False
+        else:
+            return True
+            
+            
+            
+            
