@@ -8,4 +8,17 @@ class Solution:
         arr[len_arr-1] = -1
         
         return arr
-            
+
+
+## techlent solution 
+# Time: O(n)
+# Space: O(n)
+class Solution:
+    def replaceElements(self, arr: List[int]) -> List[int]:
+        n = len(arr)
+        res = n * [0]
+        Max = -1
+        for i in range(n - 1, -1, -1):
+            res[i] = Max
+            Max = max(Max, arr[i])
+        return res    
