@@ -1,0 +1,33 @@
+# Python extend time complexity 
+# https://wiki.python.org/moin/TimeComplexity
+
+# num in setA is O(1)
+# num in listA is O(n)
+# if len(listA) == n, len(listB) == m, 
+# then sum(listA) time complexity is o(n), sum(listA) - sum(listB) time complexity is o(m+n)
+
+
+# n // 2 floor(n/2), the same as n>>1, move the bit to right by 1
+
+# Hong's solution
+class Solution:
+    def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]:
+        a_weight = sum(A)
+        b_weight = sum(B)
+        final_weight = (a_weight + b_weight)/2
+        a_diff = a_weight - final_weight
+        for a in A:
+            b = final_weight - a_weight + a
+            if b in B:
+                return [a, b]
+
+
+# solution
+class Solution:
+    def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]        
+        diff = (sum(A) - sum(B)) // 2
+        sa, sb = set(A), set(B)
+        for num in sb:
+            if num + diff in sa: return [num + diff, num]
+            
+
