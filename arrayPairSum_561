@@ -1,0 +1,63 @@
+
+# 561. Array Partition I
+
+# Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), ..., 
+# (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+
+# Note:
+# n is a positive integer, which is in the range of [1, 10000].
+# All the integers in the array will be in the range of [-10000, 10000].
+
+
+# traverse numbers [-10000, 10000] with dictionary
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        d = collections.defaultdict(int)
+        for num in nums:
+            d[num] += 1
+        res, first, i = 0, 1, -10000
+        while i <= 10000:
+            if d[i] == 0:
+                i += 1
+                continue                
+            if first:
+                res += i
+                first ^= 1
+            else: 
+                first ^= 1
+            d[i] -= 1            
+        return res
+
+
+
+
+# traverse numbers [-10000, 10000] with list
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        offset = 10000
+        d = [0] * (2 * offset + 1)
+        for num in nums:
+            d[num + offset] += 1
+            
+        res, first, i = 0, 1, -10000
+        
+        while i <= 10000:
+            if d[i+offset] == 0:
+                i += 1
+                continue
+            res += first * i
+            first ^= 1
+            d[i + offset] -= 1
+            
+        return res
+       
+
+
+
+# brute force
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        nums.sort()
+        return sum(nums[::2])
+        
+        
