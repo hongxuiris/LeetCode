@@ -1,0 +1,55 @@
+# 661. Image Smoother
+
+# Given a 2D integer matrix M representing the gray scale of an image, you need to design a smoother to make the gray 
+# scale of each cell becomes the average gray scale (rounding down) of all the 8 surrounding cells and itself. If a cell 
+# has less than 8 surrounding cells, then use as many as you can.
+
+# solution
+class Solution:
+    def imageSmoother(self, M: List[List[int]]) -> List[List[int]]:
+        if not M or not M[0]: return M
+        m,n = len(M), len(M[0])
+        res = [[0]*n for _ in range(m)]
+        lxy = [-1, 0, 1]
+        for i in range(m):
+            for j in range(n):
+                count = 0
+                for ii in lxy:
+                    for jj in lxy:
+                        if i+ii <0 or (i+ii >=m) or (j+jj <0) or (j+jj >=n): continue
+                        res[i][j] += M[i+ii][j+jj]
+                        count += 1
+                res[i][j] //= count
+        return res
+
+        
+        
+ # Hong's answer       
+class Solution:
+    def imageSmoother(self, M: List[List[int]]) -> List[List[int]]:
+        if not M or not M[0]: return M
+        m,n = len(M), len(M[0])
+        print(m,n)
+        res = [[0]*n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                print(i,j)
+                sur = {(-1,-1) :[0, 0], (-1, 0) :[0, 0], (-1,1) :[0, 0], 
+                       (0,-1) :[0, 0], (0, 0) :[M[i][j], 1], (0,1) :[0, 0], 
+                       (1,-1) :[0, 0], (1, 0) :[0, 0], (1,1) :[0, 0], }
+                if i-1 >=0: sur[(-1, 0)] = [M[i-1][j], 1]
+                if i+1 < m: sur[(1, 0)] = [M[i+1][j], 1]
+                if j-1 >=0: sur[(0, -1)] = [M[i][j-1], 1]
+                if j+1 <n: sur[(0, 1)] = [M[i][j+1], 1]
+                if i-1 >=0 and (j-1 >= 0): sur[(-1, -1)] = [M[i-1][j-1], 1] # and & are different
+                if i-1 >=0 and (j+1 < n): sur[(-1, 1)] = [M[i-1][j+1], 1]
+                if i+1 <m and (j-1 >= 0): sur[(1, -1)] = [M[i+1][j-1], 1]
+                if i+1 <m and (j+1 < n): sur[(1, 1)] = [M[i+1][j+1], 1]
+                tot = sum([a[0] for a in list(sur.values())]) 
+                cnt = sum([a[1] for a in list(sur.values())]) 
+                res[i][j] = tot // cnt
+                
+        return res
+
+                   
+
