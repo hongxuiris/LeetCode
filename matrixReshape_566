@@ -1,0 +1,58 @@
+# 566. Reshape the Matrix
+
+# In MATLAB, there is a very useful function called 'reshape', which can reshape a matrix into a new one with different size 
+# but keep its original data.
+# You're given a matrix represented by a two-dimensional array, and two positive integers r and c representing the row number 
+# and column number of the wanted reshaped matrix, respectively.
+# The reshaped matrix need to be filled with all the elements of the original matrix in the same row-traversing order as 
+# they were.
+# If the 'reshape' operation with given parameters is possible and legal, output the new reshaped matrix; Otherwise, output 
+# the original matrix.
+
+
+# solution 1
+class Solution:
+    def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+        m, n = len(nums), len(nums[0])
+        if r*c != m*n: return nums
+        res = [[0] * c for _ in range(r)]
+        for i in range(r):
+            for j in range(c):
+                res[i][j] = nums[(i*c + j) // n][(i*c + j) % n]
+        return res
+
+
+
+
+
+
+
+
+
+# solution 2
+
+class Solution:
+    def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+        m, n = len(nums), len(nums[0])
+        if r*c != m*n: return nums
+        res = [[nums[(i*c+j) // n][(i*c + j) % n] for j in range(c)] for i in range(r)]
+        return res
+        
+        
+        
+# my first try        
+class Solution:
+    def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]]:
+        m, n = len(nums), len(nums[0])
+        if r*c != m*n: return nums
+        res = [[0]*c for _ in range(r)]
+        vals = []
+        for j in range(m):
+            vals.extend(nums[j])
+            
+        for i in range(r):
+            res[i] = vals[i*c : (i+1)*c]
+            
+        return res
+
+
